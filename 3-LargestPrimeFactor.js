@@ -25,7 +25,7 @@ function isPrime(number, memo) {
     memo[number] = false;
     return false;
   }
-  for (let cur = 2; number > cur * cur; cur++) {
+  for (let cur = 2; number >= cur * cur; cur++) {
     if (number % cur === 0) {
       memo[cur] = false;
       return false;

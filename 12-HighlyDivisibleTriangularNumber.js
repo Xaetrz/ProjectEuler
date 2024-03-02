@@ -18,51 +18,34 @@ What is the value of the first triangle number to have over n divisors?
 */
 
 function divisibleTriangleNumber(n) {
-  let curTriNum = 1;
-  for (let i = 1; ; i++) {
-    if (getNumDivisors(curTriNum) >= n) return curTriNum;
+  let curTriNum = 0;
+  let i = 1;
+  while (true) {
     curTriNum += i;
+    let divisors = getNumDivisors(curTriNum);
+    if (divisors >= n) return curTriNum;
+    i++;
   }
 }
 
-// This is a brute force algorithm for calculating the number of divisors. O(n), inefficient, especially when run across many triangular numbers
-function getNumDivisorsBruteForce(n) {
-  if (n === 1) return 1;
-
-  let numDivisors = 0;
-  // Don't need to check for divisors above half of n (with the exception of n itself, which we add at the end)
-  for (let i = 1; i <= n / 2; i++) {
-    if (n % i === 0) numDivisors++;
-  }
-  return ++numDivisors;
-}
-
-// Much more efficient way of calulating the number of divisors using prime factorization. See https://en.wikipedia.org/wiki/Divisor_function
+// O(sqrt(n))
 function getNumDivisors(n) {
   if (n === 1) return 1;
+  let numDivisors = 0;
+  let sqrtN = Math.sqrt(n);
 
-  let curFactor = 2;
-  let numDivisors = 1; // n is always divisible by itself
-  let factorizedN = n; // Running factorization of n
-
-  // Dividing out factors for n as we go means we don't have to check if curFactor is prime
-  while (curFactor * curFactor <= factorizedN) {
-    if (factorizedN % curFactor === 0) {
-      let exp = 1;
-      // If current factor is a prime, check how many times it divides into n and add that to total
-      do {
-       factorizedN /= curFactor;
-       exp++;
-      } while (factorizedN % curFactor === 0)
-      numDivisors += exp;
-    }
-    curFactor = (curFactor === 2) ? 3: curFactor + 2; // Only odd numbers can be prime with exception of 2
+  // Every divisor is part of a pair (ex. n = 28: 1 * 28, 2 * 14, 4 * 7) with exception of perfect squres, 
+  // so only need to check divisors up to sqrt(n) and add 2 for each divisor. 
+  for (let i = 1; i <= sqrtN; i++) {
+    if (n % i === 0) numDivisors += 2;
   }
 
-  // If n was a prime number to begin with, then no factors would have been found by above loop. So return 2
-  //if (factorizedN > 1) return 2;
+  if (sqrtN * sqrtN === n) numDivisors--; // Subtract 1 for perfect squares (ex. 49 => 1, 7, 49; avoid counting 7 twice)
   return numDivisors;
 }
 
-console.log(getNumDivisors(28));
-//console.log(divisibleTriangleNumber(500));
+const startTime = new Date().getTime();
+const answer = divisibleTriangleNumber(500);
+const endTime = new Date().getTime();
+
+console.log(`Answer: ${answer} (Time taken: ${endTime - startTime} ms)`);

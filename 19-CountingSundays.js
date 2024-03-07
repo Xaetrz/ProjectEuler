@@ -50,6 +50,16 @@ const months = [
   "December"
 ]
 
+const days = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6
+}
+
 const monthCounts = {
   "January": 31,
   februaryDaysNonLeap: 28,
@@ -68,14 +78,6 @@ const monthCounts = {
   days: (month, year) => (month === "February") ? monthCounts.februaryDays(year): monthCounts[month]
 }
 
-const days = {
-  Sunday: 0,
-  Monday: 1,
-  Tuesday: 2,
-  Wednesday: 3,
-  Thursday: 4,
-  Friday: 5,
-  Saturday: 6
-}
+
 
 console.log(countingSundays(1901, 2000));

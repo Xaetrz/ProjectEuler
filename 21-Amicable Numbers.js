@@ -10,27 +10,28 @@ Evaluate the sum of all the amicable numbers under n.
 */
 
 function sumAmicableNum(n) {
-  const sumDivisorMap = new Map();
+  const sumDivisorMultiMap = new Map(); // Multiple nums can have the same sum of divisors, so need to store an array of them for each
   let amicableNumsSet = new Set();
 
+  // Calculate all sum of divisors
   for (let i = 1; i <= n; i++) {
     let sumDivisors = getSumDivisors(i);
-    if (sumDivisors === 1) continue;
-    let numArr = sumDivisorMap.get(sumDivisors);
+    let numArr = sumDivisorMultiMap.get(sumDivisors);
     if (numArr) {
       numArr.push(i);
     }
     else {
       numArr = [i];
     }
-    sumDivisorMap.set(sumDivisors, numArr);
+    sumDivisorMultiMap.set(sumDivisors, numArr);
   }
 
+  // Find all amicable numbers
   for (let i = 1; i <= n; i++) {
-    let bArr = sumDivisorMap.get(i);
+    let bArr = sumDivisorMultiMap.get(i);
     for (let bIdx in bArr) {
       let b = bArr[bIdx];
-      let aArr = sumDivisorMap.get(b);
+      let aArr = sumDivisorMultiMap.get(b);
       for (let aIdx in aArr) {
         let a = aArr[aIdx];
         if (a && b && a !== b && a === i) 

@@ -10,7 +10,7 @@ What is the total of all the name scores in the array?
 function namesScores(arr) {
   let nameScoreTotal = 0;
   arr.sort();
-  console.log(arr);
+  
   for (let nameIdx = 0; nameIdx < arr.length; nameIdx++) {
     let nameScore = 0;
     let nameArr = arr[nameIdx].split('');

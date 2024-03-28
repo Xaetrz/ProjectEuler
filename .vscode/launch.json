@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\33-DigitCancellingFractions.ts",
+      //"program": "${workspaceFolder}\\33-DigitCancellingFractions.ts",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]

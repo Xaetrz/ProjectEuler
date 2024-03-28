@@ -10,10 +10,40 @@ If the product of these four fractions is given in its lowest common terms, find
 */
 
 function digitCancellingFractions() {
-  let message: string = 'Hello Waodsflfd';
-console.log(message);
-  return true;
+  let nontrivNumProduct: number = 1;
+  let nontrivDenProduct: number = 1;
+
+  for (let numerator: number = 10; numerator <= 99; numerator++) {
+    let numStr: string = numerator.toString();
+    for (let denominator: number = numerator; denominator <= 99; denominator++) {
+      if (numerator === denominator) continue;
+      let denStr: string = denominator.toString();
+      let num0: number = Number(numStr[0]);
+      let num1: number = Number(numStr[1]);
+      let den0: number = Number(denStr[0]);
+      let den1: number = Number(denStr[1]);
+
+      if ((num0 === den1 && numerator / denominator === num1 / den0)
+       || (num1 === den0 && numerator / denominator === num0 / den1)) {
+        nontrivNumProduct *= numerator;
+        nontrivDenProduct *= denominator;
+      }
+    }
+  }
+
+  const gcd: number = getGCD(nontrivNumProduct, nontrivDenProduct);
+  return nontrivDenProduct / gcd;
 }
 
-digitCancellingFractions();
+// function reduce(num: number, den: number): Array<number> { 
+//   let gcd: number = getGCD(num, den);
+//   return [num / gcd, den / gcd];
+// } 
+
+// Dead simple way of getting greatest common divisor. Pulled from https://www.geeksforgeeks.org/reduce-a-fraction-to-its-simplest-form-by-using-javascript/
+function getGCD(num: number, den: number): number {
+  return den ? getGCD(den, num % den) : num;
+}
+
+console.log(digitCancellingFractions());
 
